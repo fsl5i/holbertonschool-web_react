@@ -1,58 +1,80 @@
-interface Teacher {
-  firstName: string;
-  lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [key: string]: any;
+// ===============================
+// Director Interface
+// ===============================
+
+interface DirectorInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workDirectorTasks(): string;
 }
 
-interface Directors extends Teacher {
-  numberOfReports: number;
+// ===============================
+// Teacher Interface
+// ===============================
+
+interface TeacherInterface {
+  workFromHome(): string;
+  getCoffeeBreak(): string;
+  workTeacherTasks(): string;
 }
 
-const director1: Directors = {
-  firstName: "John",
-  lastName: "Doe",
-  location: "London",
-  fullTimeEmployee: true,
-  numberOfReports: 17,
-};
+// ===============================
+// Director Class
+// ===============================
 
-console.log(director1);
-interface printTeacherFunction {
-  (firstName: string, lastName: string): string;
-}
-
-const printTeacher: printTeacherFunction = (firstName, lastName) => {
-  return `${firstName.charAt(0)}. ${lastName}`;
-};
-
-console.log(printTeacher("John", "Doe")); // J. Doe
-// interface StudentConstructor {
-  firstName: string;
-  lastName: string;
-}
-
-interface StudentInterface {
-  workOnHomework(): string;
-  displayName(): string;
-}
-
-class StudentClass implements StudentInterface {
-  firstName: string;
-  lastName: string;
-
-  constructor({ firstName, lastName }: StudentConstructor) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+class Director implements DirectorInterface {
+  workFromHome(): string {
+    return 'Working from home';
   }
 
-  workOnHomework(): string {
-    return "Currently working";
+  getCoffeeBreak(): string {
+    return 'Getting a coffee break';
   }
 
-  displayName(): string {
-    return this.firstName;
+  workDirectorTasks(): string {
+    return 'Getting to director tasks';
   }
 }
+
+// ===============================
+// Teacher Class
+// ===============================
+
+class Teacher implements TeacherInterface {
+  workFromHome(): string {
+    return 'Cannot work from home';
+  }
+
+  getCoffeeBreak(): string {
+    return 'Cannot have a break';
+  }
+
+  workTeacherTasks(): string {
+    return 'Getting to work';
+  }
+}
+
+// ===============================
+// Employee Type
+// ===============================
+
+type Employee = Director | Teacher;
+
+// ===============================
+// createEmployee function
+// ===============================
+
+function createEmployee(salary: number | string): Employee {
+  if (typeof salary === 'number' && salary < 500) {
+    return new Teacher();
+  }
+  return new Director();
+}
+
+// ===============================
+// Test
+// ===============================
+
+console.log(createEmployee(200));
+console.log(createEmployee(1000));
+console.log(createEmployee('$500'));
