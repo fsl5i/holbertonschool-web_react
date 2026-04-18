@@ -97,3 +97,19 @@ function executeWork(employee: Director | Teacher): void {
     console.log(employee.workTeacherTasks());
   }
 }
+// ===============================
+// Task 7 - String literal types
+// ===============================
+
+type Subjects = 'Math' | 'History';
+
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === 'Math') {
+    return 'Teaching Math';
+  }
+  return 'Teaching History';
+}
+
+// Tests
+console.log(teachClass('Math'));
+console.log(teachClass('History'));
